@@ -1,0 +1,35 @@
+{
+  "name": "modern-portfolio",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "@types/styled-components": "^5.1.34",
+    "framer-motion": "^10.18.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
+    "react-intersection-observer": "^9.4.3",
+    "react-tsparticles": "^2.12.2",
+    "styled-components": "^6.1.14",
+    "tsparticles": "^3.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "gh-pages": "^6.3.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9"
+  },
+  "homepage": "https://[your-github-username].github.io/modern-portfolio"
+}
