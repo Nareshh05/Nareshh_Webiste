@@ -99,8 +99,8 @@ const ExperienceContent = styled(motion.div)`
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
   padding: 2rem;
-  position: relative;
   width: 100%;
+  position: relative;
   max-width: 500px;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -142,8 +142,8 @@ const CompanyName = styled.h3`
 
 const JobTitle = styled.h4`
   color: var(--lightest-slate);
-  font-size: var(--fz-md);
   margin-bottom: 0.5rem;
+  font-size: var(--fz-md);
 `;
 
 const Duration = styled.p`

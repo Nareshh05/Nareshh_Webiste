@@ -1,81 +1,184 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import SectionContainer from './common/SectionContainer';
 
-const ContactSection = styled.section`
+const ContactSection = styled(motion.section)`
+  text-align: center;
   max-width: 600px;
   margin: 0 auto;
-  text-align: center;
 `;
 
-const Title = styled.h2`
-  font-size: clamp(40px, 5vw, 60px);
-  margin: 0 0 20px;
+const ContactForm = styled(motion.form)`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+`;
+
+const Label = styled.label`
   color: var(--lightest-slate);
+  font-size: var(--fz-sm);
 `;
 
-const Subtitle = styled.h3`
+const Input = styled.input`
+  padding: 0.8rem;
+  border-radius: var(--border-radius);
+  background: var(--light-navy);
+  border: 1px solid var(--lightest-navy);
+  color: var(--lightest-slate);
   font-size: var(--fz-md);
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-weight: 400;
-  margin-bottom: 20px;
-`;
+  transition: var(--transition);
 
-const Description = styled.p`
-  color: var(--slate);
-  font-size: var(--fz-lg);
-  line-height: 1.6;
-  margin-bottom: 50px;
-`;
-
-const ContactButton = styled(motion.a)`
-  display: inline-block;
-  padding: 1.25rem 1.75rem;
-  background: transparent;
-  color: var(--primary);
-  font-size: var(--fz-md);
-  font-family: var(--font-mono);
-  line-height: 1;
-  text-decoration: none;
-  border: 1px solid var(--primary);
-  border-radius: 4px;
-  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-
-  &:hover,
   &:focus {
-    background-color: var(--primary-tint);
     outline: none;
-    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: 0 0 5px var(--primary);
   }
 `;
 
+const TextArea = styled.textarea`
+  padding: 0.8rem;
+  border-radius: var(--border-radius);
+  background: var(--light-navy);
+  border: 1px solid var(--lightest-navy);
+  color: var(--lightest-slate);
+  font-size: var(--fz-md);
+  min-height: 150px;
+  resize: vertical;
+  transition: var(--transition);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 5px var(--primary);
+  }
+`;
+
+const SubmitButton = styled(motion.button)`
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+  padding: 1rem 2rem;
+  font-size: var(--fz-md);
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 1rem;
+
+  &:hover {
+    background: var(--primary);
+    color: var(--navy);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const SuccessMessage = styled(motion.div)`
+  color: var(--primary);
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  background: rgba(100, 255, 218, 0.1);
+`;
+
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Form will be handled by Netlify automatically
+    // We just need to show a success message
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 1000);
+  };
+
   return (
-    <ContactSection id="contact">
-      <motion.div
+    <SectionContainer id="contact">
+      <ContactSection
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
       >
-        <Subtitle>What's Next?</Subtitle>
-        <Title>Get In Touch</Title>
-        <Description>
-          I'm currently looking for new opportunities. Whether you have a question or just want to say hi,
-          I'll try my best to get back to you!
-        </Description>
-        <ContactButton
-          href="mailto:your.email@example.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ y: -3 }}
-          whileTap={{ y: 1 }}
-        >
-          Say Hello
-        </ContactButton>
-      </motion.div>
-    </ContactSection>
+        <h2>Get In Touch</h2>
+        {!isSubmitted ? (
+          <ContactForm
+            onSubmit={handleSubmit}
+            data-netlify="true"
+            name="contact"
+            method="POST"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            
+            <FormGroup>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Your name"
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="your@email.com"
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="message">Message</Label>
+              <TextArea
+                id="message"
+                name="message"
+                required
+                placeholder="Your message..."
+              />
+            </FormGroup>
+
+            <SubmitButton
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </SubmitButton>
+          </ContactForm>
+        ) : (
+          <SuccessMessage
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            Thanks for your message! I'll get back to you soon.
+          </SuccessMessage>
+        )}
+      </ContactSection>
+    </SectionContainer>
   );
 };
 

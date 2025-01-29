@@ -137,6 +137,18 @@ user experience.`,
     ]
   },
 
+  technicalSkills: [
+    "JavaScript/TypeScript",
+    "React.js",
+    "Node.js",
+    "Python",
+    "Java",
+    "SQL",
+    "Git",
+    "AWS",
+    "Docker"
+  ],
+
   languages: ["English", "Hindi", "Tamil", "German"],
 
   expertise: [

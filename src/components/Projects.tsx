@@ -20,106 +20,86 @@ const ProjectCard = styled(motion.div)`
   position: relative;
   overflow: hidden;
   height: 100%;
+  transition: var(--transition);
   
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      45deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.03) 50%,
-      transparent 100%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-  }
-
   &:hover {
     transform: translateY(-5px);
     border-color: var(--primary);
     box-shadow: var(--glass-shadow);
-
-    &::before {
-      transform: translateX(100%);
-    }
   }
 `;
 
-const ProjectTitle = styled(motion.h3)`
+const ProjectTitle = styled.h3`
   color: var(--lightest-slate);
-  font-size: var(--fz-xl);
+  font-size: var(--fz-xxl);
   margin-bottom: 1rem;
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 `;
 
-const ProjectDescription = styled(motion.p)`
-  color: var(--slate);
+const ProjectDescription = styled.p`
+  color: var(--light-slate);
   font-size: var(--fz-md);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  line-height: 1.5;
 `;
 
-const TechList = styled(motion.ul)`
+const TechList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
-  margin: 1.5rem 0;
+  gap: 1rem;
+  margin: 2rem 0;
   list-style: none;
   padding: 0;
-`;
 
-const TechItem = styled(motion.li)`
-  color: var(--light-slate);
-  font-size: var(--fz-sm);
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
+  li {
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+  }
 `;
 
 const Links = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: auto;
-`;
 
-const IconLink = styled(motion.a)`
-  color: var(--light-slate);
-  font-size: var(--fz-xl);
-  
-  &:hover {
-    color: var(--primary);
+  a {
+    color: var(--lightest-slate);
+    font-size: var(--fz-xl);
+
+    &:hover {
+      color: var(--primary);
+    }
   }
 `;
 
-const Projects = () => {
+const Projects: React.FC = () => {
   const projects = [
+    {
+      title: 'Portfolio Website',
+      description: 'A modern portfolio website built with React, TypeScript, and Styled Components. Features smooth animations and a responsive design.',
+      tech: ['React', 'TypeScript', 'Styled Components', 'Framer Motion'],
+      github: 'https://github.com/yourusername/portfolio',
+      external: 'https://yourportfolio.com',
+    },
     {
       title: "Hate Speech Detection",
       description: "Developed an advanced NLP model to detect and classify hate speech in social media content. Implemented using BERT and achieved 92% accuracy.",
       tech: ["Python", "PyTorch", "Transformers", "FastAPI", "React"],
       github: "https://github.com/yourusername/hate-speech-detection",
-      live: "https://hate-speech-demo.yourdomain.com"
+      external: "https://hate-speech-demo.yourdomain.com"
     },
     {
       title: "AI Image Generator",
       description: "Created a web application that generates unique images from text descriptions using OpenAI's DALL-E API.",
       tech: ["React", "Node.js", "OpenAI API", "TailwindCSS"],
       github: "https://github.com/yourusername/ai-image-generator",
-      live: "https://ai-image-gen.yourdomain.com"
+      external: "https://ai-image-gen.yourdomain.com"
     },
     {
       title: "Modern Portfolio",
       description: "A modern, responsive portfolio website built with React and styled-components, featuring glass morphism and smooth animations.",
       tech: ["React", "TypeScript", "Styled Components", "Framer Motion"],
       github: "https://github.com/yourusername/modern-portfolio",
-      live: "https://portfolio.yourdomain.com"
+      external: "https://portfolio.yourdomain.com"
     },
     {
       title: "E-Commerce Website",
@@ -159,119 +139,38 @@ const Projects = () => {
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { 
-      opacity: 0,
-      y: 50,
-      scale: 0.9,
-      rotateX: -15
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 15
-      }
-    }
-  };
-
   return (
     <SectionContainer id="projects">
-      <motion.h2
-        className="section-heading"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ 
-          duration: 0.8,
-          ease: [0.6, 0.05, -0.01, 0.9]
-        }}
-      >
-        Featured Projects
-      </motion.h2>
-      
+      <h2 className="section-heading">Some Things I've Built</h2>
       <ProjectsGrid
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        {projects.map((project, index) => (
-          <ProjectCard key={index} variants={cardVariants}>
-            <ProjectTitle variants={itemVariants}>
-              {project.title}
-            </ProjectTitle>
-            <ProjectDescription variants={itemVariants}>
-              {project.description}
-            </ProjectDescription>
-            <TechList variants={containerVariants}>
-              {project.tech.map((tech, techIndex) => (
-                <TechItem
-                  key={techIndex}
-                  variants={itemVariants}
-                  whileHover={{ 
-                    y: -5,
-                    scale: 1.1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 10
-                    }
-                  }}
-                >
-                  {tech}
-                </TechItem>
+        {projects.map((project, i) => (
+          <ProjectCard
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+          >
+            <ProjectTitle>{project.title}</ProjectTitle>
+            <ProjectDescription>{project.description}</ProjectDescription>
+            <TechList>
+              {project.tech.map((tech, j) => (
+                <li key={j}>{tech}</li>
               ))}
             </TechList>
             <Links>
-              <IconLink
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FiGithub />
-              </IconLink>
-              {project.live && (
-                <IconLink
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                  <FiGithub />
+                </a>
+              )}
+              {project.external && (
+                <a href={project.external} target="_blank" rel="noopener noreferrer">
                   <FiExternalLink />
-                </IconLink>
+                </a>
               )}
             </Links>
           </ProjectCard>
